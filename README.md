@@ -9,7 +9,7 @@ In this library, a color in each supported color system is represented as a
 ## Supported color systems
 
 * RGB (0.0&ndash;1.0)
-* RGB (0&ndash;255)
+* RGB (0&ndash;255) (via [rgb255.py](rgb255.py))
 * HLS
 * HSV
 * YIQ

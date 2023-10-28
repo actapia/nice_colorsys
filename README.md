@@ -19,7 +19,7 @@ In this library, a color in each supported color system is represented as a
 ```python
 from nice_colorsys import *
 
-hsv(0.5, 1, 1).to_hls()
+print(hsv(0.5, 1, 1).to_hls())
 
 # Output:
 #

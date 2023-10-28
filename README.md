@@ -4,7 +4,7 @@ This is a very small library that may offer a nicer way of working with and
 converting between color systems than the default Python colorsys library.
 
 In this library, a color in each supported color system is represented as a
-`namedtuple` with `to_` methods for converting to different color systems.\
+`namedtuple` with `to_` methods for converting to different color systems.
 
 ## Supported color systems
 

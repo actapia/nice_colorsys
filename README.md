@@ -8,9 +8,10 @@ In this library, a color in each supported color system is represented as a
 
 ## Supported color systems
 
+* RGB (0.0&ndash;1.0)
+* RGB (0&ndash;255)
 * HLS
 * HSV
-* RGB
 * YIQ
 * HSLuv (via [nice_hsluv.py](nice_hsluv.py))
 

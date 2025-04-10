@@ -16,7 +16,7 @@ In this library, a color in each supported color system is represented as a
 * YIQ
 * RGB (0&ndash;255) (with [`nice_colorsys.rgb255`](src/nice_colrosys/rgb255.py))
 
-### With [hsluv](https://github.com/hsluv/hsluv-python) via [`nice_colorsys.hsluv`](src/nice_colorsys/hsluv.py))
+### With [hsluv](https://github.com/hsluv/hsluv-python) via [`nice_colorsys.hsluv`](src/nice_colorsys/hsluv.py)
 
 * HSLuv
 * CIELUV

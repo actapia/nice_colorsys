@@ -2,13 +2,43 @@ import colorsys
 from itertools import permutations
 from collections import namedtuple
 
-hls = namedtuple("hls", ["hue", "lightness", "saturation"])
-hsv = namedtuple("hsv", ["hue", "saturation", "value"])
-rgb = namedtuple("rgb", ["red", "green", "blue"])
-yiq = namedtuple("yiq", ["y", "i", "q"])
-chrominance = namedtuple("chrominance", ["i", "q"])
-yiq.luma = property(lambda x: x.y)
-yiq.chrominance = property(lambda x: chrominance(x.i, x.q))
+def range_restrict(x, min_, max_, mod):
+    if not mod:
+        return max(min_, min(max_, x))
+    else:
+        return (x - min_) % (max_ - min_) + min_
+
+def safe(self):
+    return type(self)(
+        *(
+            range_restrict(x, *r, m) if r is not None else x
+            for (x, r, m) in zip(self, type(self).ranges, type(self).modular)
+        )
+    )
+
+def colorspace(name, fields, ranges=None, modular=None):
+    if modular is None:
+        modular = (False,)*len(fields)
+    res = namedtuple(name, fields)
+    if ranges is not None:
+        res.ranges = ranges
+        res.modular = modular
+        res.safe = safe
+    return res
+        
+h_mod = (True, False, False)
+unit = ((0, 1),)
+hls = colorspace("hls", ["hue", "lightness", "saturation"], unit*3, h_mod)
+hsv = colorspace("hsv", ["hue", "saturation", "value"], unit*3, h_mod)
+rgb = colorspace("rgb", ["red", "green", "blue"], unit*3)
+yiq = colorspace(
+    "yiq",
+    ["luma", "in_phase", "quadrature"],
+    ((0, 1), (-0.5957, 0.5957), (-0.5226, 0.5226))
+)
+chrominance = namedtuple("chrominance", ["in_phase", "quadrature"])
+yiq.luma = property(lambda x: x.in_phase)
+yiq.chrominance = property(lambda x: chrominance(x.in_phase, x.quadrature))
 spaces = {"hls": hls, "hsv": hsv, "rgb": rgb, "yiq": yiq}
 __all__ = list(spaces)
 for s in spaces:

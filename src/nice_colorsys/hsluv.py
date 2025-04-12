@@ -1,14 +1,27 @@
 import hsluv as hsluv_
-from collections import namedtuple
 from .custom_space import register_space, derived_rgb_functions
+from .nice_colorsys import colorspace
 
-hsluv = namedtuple("hsluv", ["hue", "saturation", "lightness"])
-luv = cieluv = namedtuple("cieluv", ["luminance", "u", "v"])
+hsluv = colorspace(
+    "hsluv",
+    ["hue", "saturation", "lightness"],
+    ((0, 360), (0, 100), (0, 100))
+)
+luv = cieluv = colorspace(
+    "cieluv",
+    ["luminance", "u", "v"],
+    ((0, 100), (-134, 220), (-140, 122))
+)
 luv.l = property(lambda x: x.luminance)
-lch = cielch = namedtuple("cielch", ["luminance", "chroma", "hue"])
+lch = cielch = colorspace(
+    "cielch",
+    ["luminance", "chroma", "hue"],
+    ((0, 100), (0, None), (0, 360)),
+    (False, False, True)
+)
 lch.c = property(lambda x: x.chroma)
 lch.h = property(lambda x: x.hue)
-xyz = ciexyz = namedtuple("ciexyz", ["x", "lightness", "z"])
+xyz = ciexyz = colorspace("ciexyz", ["x", "lightness", "z"])
 xyz.y = property(lambda x: x.lightness)
 register_space(hsluv, hsluv_.hsluv_to_rgb, hsluv_.rgb_to_hsluv)
 register_space(lch, hsluv_.lch_to_rgb, hsluv_.rgb_to_lch)
